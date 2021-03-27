@@ -3,7 +3,7 @@
 
 /**
  * A helper file for Laravel, to provide autocomplete information to your IDE
- * Generated for Laravel 8.33.1.
+ * Generated for Laravel 8.34.0.
  *
  * This file should not be included in your code, only analyzed by your IDE!
  *
@@ -5429,6 +5429,19 @@
         public static function hasMacro($name)
         {
                         return \Illuminate\Events\Dispatcher::hasMacro($name);
+        }
+                    /**
+         * Assert if an event has a listener attached to it.
+         *
+         * @param string $expectedEvent
+         * @param string $expectedListener
+         * @return void 
+         * @static 
+         */ 
+        public static function assertListening($expectedEvent, $expectedListener)
+        {
+                        /** @var \Illuminate\Support\Testing\Fakes\EventFake $instance */
+                        $instance->assertListening($expectedEvent, $expectedListener);
         }
                     /**
          * Assert if an event was dispatched based on a truth-test callback.
@@ -14761,7 +14774,7 @@
      
 }
 
-        namespace Atymic\Twitter\Facades { 
+        namespace Atymic\Twitter\Facade { 
             /**
      * 
      *
@@ -14775,7 +14788,7 @@
          */ 
         public static function usingCredentials($accessToken, $accessTokenSecret)
         {
-                        /** @var \Atymic\Twitter\Twitter $instance */
+                        /** @var \Atymic\Twitter\Service\Accessor $instance */
                         return $instance->usingCredentials($accessToken, $accessTokenSecret);
         }
                     /**
@@ -14786,1720 +14799,104 @@
          */ 
         public static function usingConfiguration($configuration)
         {
-                        /** @var \Atymic\Twitter\Twitter $instance */
+                        /** @var \Atymic\Twitter\Service\Accessor $instance */
                         return $instance->usingConfiguration($configuration);
         }
                     /**
          * 
          *
-         * @return mixed|string 
-         * @throws TwitterRequestException
+         * @throws RequestException
+         * @see https://developer.twitter.com/en/docs/twitter-api/tweets/lookup/api-reference/get-tweets-id
          * @static 
          */ 
-        public static function query($endpoint, $requestMethod = 'GET', $parameters = [], $multipart = false, $extension = 'json')
+        public static function getTweet($tweetId, ...$queryParameters)
         {
-                        /** @var \Atymic\Twitter\Twitter $instance */
-                        return $instance->query($endpoint, $requestMethod, $parameters, $multipart, $extension);
+                        /** @var \Atymic\Twitter\Service\Accessor $instance */
+                        return $instance->getTweet($tweetId, ...$queryParameters);
         }
                     /**
          * 
          *
-         * @return mixed|string 
-         * @throws TwitterRequestException
+         * @throws RequestException
+         * @see https://developer.twitter.com/en/docs/twitter-api/tweets/lookup/api-reference/get-tweets
          * @static 
          */ 
-        public static function directQuery($url, $requestMethod = 'GET', $parameters = [])
+        public static function getTweets($tweetIds, ...$additionalParameters)
         {
-                        /** @var \Atymic\Twitter\Twitter $instance */
-                        return $instance->directQuery($url, $requestMethod, $parameters);
+                        /** @var \Atymic\Twitter\Service\Accessor $instance */
+                        return $instance->getTweets($tweetIds, ...$additionalParameters);
         }
                     /**
          * 
          *
-         * @param array $parameters
-         * @param bool $multipart
-         * @param string $extension
-         * @return mixed|string 
-         * @throws TwitterRequestException
+         * @throws RequestException
+         * @see https://developer.twitter.com/en/docs/twitter-api/tweets/search/api-reference/get-tweets-search-recent
          * @static 
          */ 
-        public static function get($endpoint, $parameters = [], $multipart = false, $extension = 'json')
+        public static function searchRecent($query, ...$additionalParameters)
         {
-                        /** @var \Atymic\Twitter\Twitter $instance */
-                        return $instance->get($endpoint, $parameters, $multipart, $extension);
+                        /** @var \Atymic\Twitter\Service\Accessor $instance */
+                        return $instance->searchRecent($query, ...$additionalParameters);
         }
                     /**
          * 
          *
-         * @return mixed|string 
-         * @throws TwitterRequestException
+         * @throws RequestException
+         * @see https://developer.twitter.com/en/docs/twitter-api/tweets/search/api-reference/get-tweets-search-all
          * @static 
          */ 
-        public static function post($endpoint, $parameters = [], $multipart = false)
+        public static function searchAll($query, ...$additionalParameters)
         {
-                        /** @var \Atymic\Twitter\Twitter $instance */
-                        return $instance->post($endpoint, $parameters, $multipart);
+                        /** @var \Atymic\Twitter\Service\Accessor $instance */
+                        return $instance->searchAll($query, ...$additionalParameters);
         }
                     /**
          * 
          *
+         * @throws RequestException
+         * @see https://developer.twitter.com/en/docs/twitter-api/tweets/timelines/api-reference/get-users-id-tweets
          * @static 
          */ 
-        public static function linkify($tweet)
+        public static function userTweets($userId, ...$queryParameters)
         {
-                        /** @var \Atymic\Twitter\Twitter $instance */
-                        return $instance->linkify($tweet);
+                        /** @var \Atymic\Twitter\Service\Accessor $instance */
+                        return $instance->userTweets($userId, ...$queryParameters);
         }
                     /**
          * 
          *
+         * @throws RequestException
+         * @see https://developer.twitter.com/en/docs/twitter-api/tweets/timelines/api-reference/get-users-id-mentions
          * @static 
          */ 
-        public static function ago($timestamp)
+        public static function userMentions($userId, ...$queryParameters)
         {
-                        /** @var \Atymic\Twitter\Twitter $instance */
-                        return $instance->ago($timestamp);
+                        /** @var \Atymic\Twitter\Service\Accessor $instance */
+                        return $instance->userMentions($userId, ...$queryParameters);
         }
                     /**
          * 
          *
+         * @throws RequestException
+         * @see https://developer.twitter.com/en/docs/twitter-api/tweets/hide-replies/api-reference/put-tweets-id-hidden
          * @static 
          */ 
-        public static function linkUser($user)
+        public static function hideTweet($tweetId, $hidden = true)
         {
-                        /** @var \Atymic\Twitter\Twitter $instance */
-                        return $instance->linkUser($user);
+                        /** @var \Atymic\Twitter\Service\Accessor $instance */
+                        return $instance->hideTweet($tweetId, $hidden);
         }
                     /**
          * 
          *
+         * @throws RequestException
+         * @see https://developer.twitter.com/en/docs/twitter-api/tweets/filtered-stream/api-reference/get-tweets-search-stream-rules
          * @static 
          */ 
-        public static function linkTweet($tweet)
+        public static function getStreamRules(...$parameters)
         {
-                        /** @var \Atymic\Twitter\Twitter $instance */
-                        return $instance->linkTweet($tweet);
-        }
-                    /**
-         * 
-         *
-         * @static 
-         */ 
-        public static function linkRetweet($tweet)
-        {
-                        /** @var \Atymic\Twitter\Twitter $instance */
-                        return $instance->linkRetweet($tweet);
-        }
-                    /**
-         * 
-         *
-         * @static 
-         */ 
-        public static function linkAddTweetToFavorites($tweet)
-        {
-                        /** @var \Atymic\Twitter\Twitter $instance */
-                        return $instance->linkAddTweetToFavorites($tweet);
-        }
-                    /**
-         * 
-         *
-         * @static 
-         */ 
-        public static function linkReply($tweet)
-        {
-                        /** @var \Atymic\Twitter\Twitter $instance */
-                        return $instance->linkReply($tweet);
-        }
-                    /**
-         * Returns settings (including current trend, geo and sleep time information) for the authenticating user.
-         *
-         * @param mixed $parameters
-         * @static 
-         */ 
-        public static function getSettings($parameters = [])
-        {
-                        /** @var \Atymic\Twitter\Twitter $instance */
-                        return $instance->getSettings($parameters);
-        }
-                    /**
-         * Returns an HTTP 200 OK response code and a representation of the requesting user if authentication was
-         * successful; returns a 401 status code and an error message if not.
-         * 
-         * Use this method to test if supplied user credentials are valid.
-         * 
-         * Parameters :
-         * - include_entities (0|1)
-         * - skip_status (0|1)
-         *
-         * @param mixed $parameters
-         * @static 
-         */ 
-        public static function getCredentials($parameters = [])
-        {
-                        /** @var \Atymic\Twitter\Twitter $instance */
-                        return $instance->getCredentials($parameters);
-        }
-                    /**
-         * Updates the authenticating user’s settings.
-         * 
-         * Parameters :
-         * - trend_location_woeid
-         * - sleep_time_enabled (0|1)
-         * - start_sleep_time
-         * - end_sleep_time
-         * - time_zone
-         * - lang
-         *
-         * @param mixed $parameters
-         * @static 
-         */ 
-        public static function postSettings($parameters = [])
-        {
-                        /** @var \Atymic\Twitter\Twitter $instance */
-                        return $instance->postSettings($parameters);
-        }
-                    /**
-         * Sets which device Twitter delivers updates to for the authenticating user.
-         * 
-         * Sending none as the device parameter will disable SMS updates.
-         * 
-         * Parameters :
-         * - device (sms|none)
-         * - include_entities (0|1)
-         *
-         * @param mixed $parameters
-         * @static 
-         */ 
-        public static function postSettingsDevice($parameters = [])
-        {
-                        /** @var \Atymic\Twitter\Twitter $instance */
-                        return $instance->postSettingsDevice($parameters);
-        }
-                    /**
-         * Sets some values that users are able to set under the “Account” tab of their settings page. Only the parameters specified will be updated.
-         * 
-         * Parameters :
-         * - name
-         * - url
-         * - location
-         * - description (0-160)
-         * - include_entities (0|1)
-         * - skip_status (0|1)
-         *
-         * @param mixed $parameters
-         * @static 
-         */ 
-        public static function postProfile($parameters = [])
-        {
-                        /** @var \Atymic\Twitter\Twitter $instance */
-                        return $instance->postProfile($parameters);
-        }
-                    /**
-         * Updates the authenticating user’s profile background image. This method can also be used to enable or disable the profile background image.
-         * 
-         * Parameters :
-         * - image
-         * - tile
-         * - include_entities (0|1)
-         * - skip_status (0|1)
-         * - use (0|1)
-         *
-         * @param mixed $parameters
-         * @static 
-         */ 
-        public static function postBackground($parameters = [])
-        {
-                        /** @var \Atymic\Twitter\Twitter $instance */
-                        return $instance->postBackground($parameters);
-        }
-                    /**
-         * Updates the authenticating user’s profile image. Note that this method expects raw multipart data, not a URL to an image.
-         * 
-         * Parameters :
-         * - image
-         * - include_entities (0|1)
-         * - skip_status (0|1)
-         *
-         * @param mixed $parameters
-         * @static 
-         */ 
-        public static function postProfileImage($parameters = [])
-        {
-                        /** @var \Atymic\Twitter\Twitter $instance */
-                        return $instance->postProfileImage($parameters);
-        }
-                    /**
-         * Removes the uploaded profile banner for the authenticating user. Returns HTTP 200 upon success.
-         *
-         * @param mixed $parameters
-         * @static 
-         */ 
-        public static function destroyUserBanner($parameters = [])
-        {
-                        /** @var \Atymic\Twitter\Twitter $instance */
-                        return $instance->destroyUserBanner($parameters);
-        }
-                    /**
-         * Uploads a profile banner on behalf of the authenticating user. For best results, upload an profile_banner_url node in their Users objects. More information about sizing variations can be found in User Profile Images and Banners and GET users / profile_banner.
-         * 
-         * Parameters :
-         * - banner
-         * - width
-         * - height
-         * - offset_left
-         * - offset_top
-         *
-         * @param mixed $parameters
-         * @static 
-         */ 
-        public static function postUserBanner($parameters = [])
-        {
-                        /** @var \Atymic\Twitter\Twitter $instance */
-                        return $instance->postUserBanner($parameters);
-        }
-                    /**
-         * Returns a collection of user objects that the authenticating user is blocking.
-         * 
-         * Parameters :
-         * - include_entities (0|1)
-         * - skip_status (0|1)
-         * - cursor
-         *
-         * @param mixed $parameters
-         * @static 
-         */ 
-        public static function getBlocks($parameters = [])
-        {
-                        /** @var \Atymic\Twitter\Twitter $instance */
-                        return $instance->getBlocks($parameters);
-        }
-                    /**
-         * Returns an array of numeric user ids the authenticating user is blocking.
-         * 
-         * Parameters :
-         * - stringify_ids (0|1)
-         * - cursor
-         *
-         * @param mixed $parameters
-         * @static 
-         */ 
-        public static function getBlocksIds($parameters = [])
-        {
-                        /** @var \Atymic\Twitter\Twitter $instance */
-                        return $instance->getBlocksIds($parameters);
-        }
-                    /**
-         * Blocks the specified user from following the authenticating user. In addition the blocked user will not show in the authenticating users mentions or timeline (unless retweeted by another user). If a follow or friend relationship exists it is destroyed.
-         * 
-         * Parameters :
-         * - screen_name
-         * - user_id
-         * - include_entities (0|1)
-         * - skip_status (0|1)
-         *
-         * @param mixed $parameters
-         * @static 
-         */ 
-        public static function postBlock($parameters = [])
-        {
-                        /** @var \Atymic\Twitter\Twitter $instance */
-                        return $instance->postBlock($parameters);
-        }
-                    /**
-         * Un-blocks the user specified in the ID parameter for the authenticating user. Returns the un-blocked user in the requested format when successful. If relationships existed before the block was instated, they will not be restored.
-         * 
-         * Parameters :
-         * - screen_name
-         * - user_id
-         * - include_entities (0|1)
-         * - skip_status (0|1)
-         *
-         * @param mixed $parameters
-         * @static 
-         */ 
-        public static function destroyBlock($parameters = [])
-        {
-                        /** @var \Atymic\Twitter\Twitter $instance */
-                        return $instance->destroyBlock($parameters);
-        }
-                    /**
-         * Returns a single direct message event, specified by an id parameter.
-         * 
-         * Parameters :
-         * - id
-         *
-         * @param mixed $parameters
-         * @static 
-         */ 
-        public static function getDm($parameters = [])
-        {
-                        /** @var \Atymic\Twitter\Twitter $instance */
-                        return $instance->getDm($parameters);
-        }
-                    /**
-         * Returns all Direct Message events (both sent and received) within the last 30 days. Sorted in reverse-chronological order.
-         * 
-         * Parameters :
-         * - count (1-50)
-         * - cursor
-         *
-         * @param mixed $parameters
-         * @static 
-         */ 
-        public static function getDms($parameters = [])
-        {
-                        /** @var \Atymic\Twitter\Twitter $instance */
-                        return $instance->getDms($parameters);
-        }
-                    /**
-         * Destroys the direct message specified in the required ID parameter. The authenticating user must be the recipient of the specified direct message.
-         * 
-         * Parameters :
-         * - id
-         *
-         * @param mixed $parameters
-         * @static 
-         */ 
-        public static function destroyDm($parameters = [])
-        {
-                        /** @var \Atymic\Twitter\Twitter $instance */
-                        return $instance->destroyDm($parameters);
-        }
-                    /**
-         * Publishes a new message_create event resulting in a Direct Message sent to a specified user from the
-         * authenticating user. Returns an event if successful. Supports publishing Direct Messages with optional Quick
-         * Reply and media attachment.
-         * 
-         * Parameters :
-         * - type
-         * - message_create
-         *
-         * @see https://developer.twitter.com/en/docs/direct-messages/sending-and-receiving/api-reference/new-event
-         * @param mixed $parameters
-         * @throws BadMethodCallException
-         * @static 
-         */ 
-        public static function postDm($parameters = [])
-        {
-                        /** @var \Atymic\Twitter\Twitter $instance */
-                        return $instance->postDm($parameters);
-        }
-                    /**
-         * Returns the 20 most recent Tweets favorited by the authenticating or specified user.
-         * 
-         * Parameters :
-         * - user_id
-         * - screen_name
-         * - count (1-200)
-         * - since_id
-         * - max_id
-         * - include_entities (0|1)
-         *
-         * @param mixed $parameters
-         * @static 
-         */ 
-        public static function getFavorites($parameters = [])
-        {
-                        /** @var \Atymic\Twitter\Twitter $instance */
-                        return $instance->getFavorites($parameters);
-        }
-                    /**
-         * Un-favorites the status specified in the ID parameter as the authenticating user. Returns the un-favorited status in the requested format when successful.
-         * 
-         * Parameters :
-         * - id
-         * - include_entities (0|1)
-         *
-         * @param mixed $parameters
-         * @static 
-         */ 
-        public static function destroyFavorite($parameters = [])
-        {
-                        /** @var \Atymic\Twitter\Twitter $instance */
-                        return $instance->destroyFavorite($parameters);
-        }
-                    /**
-         * Favorites the status specified in the ID parameter as the authenticating user. Returns the favorite status when successful.
-         * 
-         * Parameters :
-         * - id
-         * - include_entities (0|1)
-         *
-         * @param mixed $parameters
-         * @static 
-         */ 
-        public static function postFavorite($parameters = [])
-        {
-                        /** @var \Atymic\Twitter\Twitter $instance */
-                        return $instance->postFavorite($parameters);
-        }
-                    /**
-         * Returns a collection of user_ids that the currently authenticated user does not want to receive retweets from.
-         * 
-         * Parameters :
-         * - stringify_ids (0|1)
-         *
-         * @param mixed $parameters
-         * @static 
-         */ 
-        public static function getNoRters($parameters = [])
-        {
-                        /** @var \Atymic\Twitter\Twitter $instance */
-                        return $instance->getNoRters($parameters);
-        }
-                    /**
-         * Returns a cursored collection of user IDs for every user following the specified user.
-         * 
-         * Parameters :
-         * - user_id
-         * - screen_name
-         * - cursor
-         * - stringify_ids (0|1)
-         * - count (1-5000)
-         *
-         * @param mixed $parameters
-         * @static 
-         */ 
-        public static function getFriendsIds($parameters = [])
-        {
-                        /** @var \Atymic\Twitter\Twitter $instance */
-                        return $instance->getFriendsIds($parameters);
-        }
-                    /**
-         * Returns a cursored collection of user IDs for every user following the specified user.
-         * 
-         * Parameters :
-         * - user_id
-         * - screen_name
-         * - cursor
-         * - stringify_ids (0|1)
-         * - count (1-5000)
-         *
-         * @param mixed $parameters
-         * @static 
-         */ 
-        public static function getFollowersIds($parameters = [])
-        {
-                        /** @var \Atymic\Twitter\Twitter $instance */
-                        return $instance->getFollowersIds($parameters);
-        }
-                    /**
-         * Returns a collection of numeric IDs for every user who has a pending request to follow the authenticating user.
-         * 
-         * Parameters :
-         * - cursor
-         * - stringify_ids (0|1)
-         *
-         * @param mixed $parameters
-         * @static 
-         */ 
-        public static function getFriendshipsIn($parameters = [])
-        {
-                        /** @var \Atymic\Twitter\Twitter $instance */
-                        return $instance->getFriendshipsIn($parameters);
-        }
-                    /**
-         * Returns a collection of numeric IDs for every protected user for whom the authenticating user has a pending follow request.
-         * 
-         * Parameters :
-         * - cursor
-         * - stringify_ids (0|1)
-         *
-         * @param mixed $parameters
-         * @static 
-         */ 
-        public static function getFriendshipsOut($parameters = [])
-        {
-                        /** @var \Atymic\Twitter\Twitter $instance */
-                        return $instance->getFriendshipsOut($parameters);
-        }
-                    /**
-         * Allows the authenticating users to follow the user specified in the ID parameter.
-         * 
-         * Parameters :
-         * - screen_name
-         * - user_id
-         * - follow (0|1)
-         *
-         * @param mixed $parameters
-         * @static 
-         */ 
-        public static function postFollow($parameters = [])
-        {
-                        /** @var \Atymic\Twitter\Twitter $instance */
-                        return $instance->postFollow($parameters);
-        }
-                    /**
-         * Allows the authenticating user to unfollow the user specified in the ID parameter.
-         * 
-         * Parameters :
-         * - screen_name
-         * - user_id
-         *
-         * @param mixed $parameters
-         * @static 
-         */ 
-        public static function postUnfollow($parameters = [])
-        {
-                        /** @var \Atymic\Twitter\Twitter $instance */
-                        return $instance->postUnfollow($parameters);
-        }
-                    /**
-         * Allows one to enable or disable retweets and device notifications from the specified user.
-         * 
-         * Parameters :
-         * - screen_name
-         * - user_id
-         * - device (0|1)
-         * - retweets (0|1)
-         *
-         * @param mixed $parameters
-         * @static 
-         */ 
-        public static function postFollowUpdate($parameters = [])
-        {
-                        /** @var \Atymic\Twitter\Twitter $instance */
-                        return $instance->postFollowUpdate($parameters);
-        }
-                    /**
-         * Returns detailed information about the relationship between two arbitrary users.
-         * 
-         * Parameters :
-         * - source_id
-         * - source_screen_name
-         * - target_id
-         * - target_screen_name
-         *
-         * @param mixed $parameters
-         * @static 
-         */ 
-        public static function getFriendships($parameters = [])
-        {
-                        /** @var \Atymic\Twitter\Twitter $instance */
-                        return $instance->getFriendships($parameters);
-        }
-                    /**
-         * Returns a cursored collection of user objects for every user the specified user is following (otherwise known as their “friends”).
-         * 
-         * Parameters :
-         * - user_id
-         * - screen_name
-         * - cursor
-         * - skip_status (0|1)
-         * - include_user_entities (0|1)
-         *
-         * @param mixed $parameters
-         * @static 
-         */ 
-        public static function getFriends($parameters = [])
-        {
-                        /** @var \Atymic\Twitter\Twitter $instance */
-                        return $instance->getFriends($parameters);
-        }
-                    /**
-         * Returns a cursored collection of user objects for users following the specified user.
-         * 
-         * Parameters :
-         * - user_id
-         * - screen_name
-         * - cursor
-         * - skip_status (0|1)
-         * - include_user_entities (0|1)
-         *
-         * @param mixed $parameters
-         * @static 
-         */ 
-        public static function getFollowers($parameters = [])
-        {
-                        /** @var \Atymic\Twitter\Twitter $instance */
-                        return $instance->getFollowers($parameters);
-        }
-                    /**
-         * Returns the relationships of the authenticating user to the comma-separated list of up to 100 screen_names or user_ids provided. Values for connections can be: following, following_requested, followed_by, none, blocking, muting.
-         * 
-         * Parameters :
-         * - screen_name
-         * - user_id
-         *
-         * @param mixed $parameters
-         * @static 
-         */ 
-        public static function getFriendshipsLookup($parameters = [])
-        {
-                        /** @var \Atymic\Twitter\Twitter $instance */
-                        return $instance->getFriendshipsLookup($parameters);
-        }
-                    /**
-         * Returns all the information about a known place.
-         *
-         * @param mixed $id
-         * @static 
-         */ 
-        public static function getGeo($id)
-        {
-                        /** @var \Atymic\Twitter\Twitter $instance */
-                        return $instance->getGeo($id);
-        }
-                    /**
-         * Given a latitude and a longitude, searches for up to 20 places that can be used as a place_id when updating a status.
-         * 
-         * Parameters :
-         * - lat
-         * - long
-         * - accuracy
-         * - granularity (poi|neighborhood|city|admin|country)
-         * - max_results
-         * - callback
-         *
-         * @param mixed $parameters
-         * @static 
-         */ 
-        public static function getGeoReverse($parameters = [])
-        {
-                        /** @var \Atymic\Twitter\Twitter $instance */
-                        return $instance->getGeoReverse($parameters);
-        }
-                    /**
-         * Search for places that can be attached to a statuses/update. Given a latitude and a longitude pair, an IP address, or a name, this request will return a list of all the valid places that can be used as the place_id when updating a status.
-         * 
-         * Parameters :
-         * - lat
-         * - long
-         * - query
-         * - ip
-         * - granularity (poi|neighborhood|city|admin|country)
-         * - accuracy
-         * - max_results
-         * - contained_within
-         * - attribute:street_address
-         * - callback
-         *
-         * @param mixed $parameters
-         * @static 
-         */ 
-        public static function getGeoSearch($parameters = [])
-        {
-                        /** @var \Atymic\Twitter\Twitter $instance */
-                        return $instance->getGeoSearch($parameters);
-        }
-                    /**
-         * Locates places near the given coordinates which are similar in name. Conceptually you would use this method to get a list of known places to choose from first. Then, if the desired place doesn't exist, make a request to POST geo/place to create a new one. The token contained in the response is the token needed to be able to create a new place.
-         * 
-         * Parameters :
-         * - lat
-         * - long
-         * - name
-         * - contained_within
-         * - attribute:street_address
-         * - callback
-         *
-         * @param mixed $parameters
-         * @static 
-         */ 
-        public static function getGeoSimilar($parameters = [])
-        {
-                        /** @var \Atymic\Twitter\Twitter $instance */
-                        return $instance->getGeoSimilar($parameters);
-        }
-                    /**
-         * Report the specified user as a spam account to Twitter. Additionally performs the equivalent of POST blocks / create on behalf of the authenticated user.
-         * 
-         * Parameters :
-         * - screen_name
-         * - user_id
-         *
-         * @param mixed $parameters
-         * @static 
-         */ 
-        public static function postSpam($parameters = [])
-        {
-                        /** @var \Atymic\Twitter\Twitter $instance */
-                        return $instance->postSpam($parameters);
-        }
-                    /**
-         * Returns the current configuration used by Twitter including twitter.com slugs which are not usernames, maximum photo resolutions, and t.co URL lengths.
-         *
-         * @param mixed $parameters
-         * @static 
-         */ 
-        public static function getHelpConfiguration($parameters = [])
-        {
-                        /** @var \Atymic\Twitter\Twitter $instance */
-                        return $instance->getHelpConfiguration($parameters);
-        }
-                    /**
-         * Returns the list of languages supported by Twitter along with the language code supported by Twitter.
-         *
-         * @param mixed $parameters
-         * @static 
-         */ 
-        public static function getHelpLanguages($parameters = [])
-        {
-                        /** @var \Atymic\Twitter\Twitter $instance */
-                        return $instance->getHelpLanguages($parameters);
-        }
-                    /**
-         * Returns Twitter’s Privacy Policy.
-         *
-         * @param mixed $parameters
-         * @static 
-         */ 
-        public static function getHelpPrivacy($parameters = [])
-        {
-                        /** @var \Atymic\Twitter\Twitter $instance */
-                        return $instance->getHelpPrivacy($parameters);
-        }
-                    /**
-         * Returns the Twitter Terms of Service. Note: these are not the same as the Developer Policy.
-         *
-         * @param mixed $parameters
-         * @static 
-         */ 
-        public static function getHelpTos($parameters = [])
-        {
-                        /** @var \Atymic\Twitter\Twitter $instance */
-                        return $instance->getHelpTos($parameters);
-        }
-                    /**
-         * Returns the current rate limits for methods belonging to the specified resource families.
-         *
-         * @param mixed $parameters
-         * @static 
-         */ 
-        public static function getAppRateLimit($parameters = [])
-        {
-                        /** @var \Atymic\Twitter\Twitter $instance */
-                        return $instance->getAppRateLimit($parameters);
-        }
-                    /**
-         * Returns all lists the authenticating or specified user subscribes to, including their own. The user is specified using the user_id or screen_name parameters. If no user is given, the authenticating user is used.
-         * 
-         * Parameters :
-         * - user_id
-         * - screen_name
-         * - reverse (0|1)
-         *
-         * @param mixed $parameters
-         * @static 
-         */ 
-        public static function getLists($parameters = [])
-        {
-                        /** @var \Atymic\Twitter\Twitter $instance */
-                        return $instance->getLists($parameters);
-        }
-                    /**
-         * Returns a timeline of tweets authored by members of the specified list. Retweets are included by default. Use the include_rts=false parameter to omit retweets.
-         * 
-         * Parameters :
-         * - list_id
-         * - slug
-         * - owner_screen_name
-         * - owner_id
-         * - since_id
-         * - max_id
-         * - count
-         * - include_entities (0|1)
-         * - include_rts (0|1)
-         *
-         * @param mixed $parameters
-         * @static 
-         */ 
-        public static function getListStatuses($parameters = [])
-        {
-                        /** @var \Atymic\Twitter\Twitter $instance */
-                        return $instance->getListStatuses($parameters);
-        }
-                    /**
-         * Removes the specified member from the list. The authenticated user must be the list’s owner to remove members from the list.
-         * 
-         * Parameters :
-         * - list_id
-         * - slug
-         * - user_id
-         * - screen_name
-         * - owner_screen_name
-         * - owner_id
-         *
-         * @param mixed $parameters
-         * @static 
-         */ 
-        public static function destroyListMember($parameters = [])
-        {
-                        /** @var \Atymic\Twitter\Twitter $instance */
-                        return $instance->destroyListMember($parameters);
-        }
-                    /**
-         * Returns the lists the specified user has been added to. If user_id or screen_name are not provided the memberships for the authenticating user are returned.
-         * 
-         * Parameters :
-         * - user_id
-         * - screen_name
-         * - count
-         * - cursor
-         * - filter_to_owned_lists
-         *
-         * @param mixed $parameters
-         * @static 
-         */ 
-        public static function getListsMemberships($parameters = [])
-        {
-                        /** @var \Atymic\Twitter\Twitter $instance */
-                        return $instance->getListsMemberships($parameters);
-        }
-                    /**
-         * Returns the subscribers of the specified list. Private list subscribers will only be shown if the authenticated user owns the specified list.
-         * 
-         * Parameters :
-         * - list_id
-         * - slug
-         * - owner_screen_name
-         * - owner_id
-         * - cursor
-         * - include_entities (0|1)
-         * - skip_status (0|1)
-         *
-         * @param mixed $parameters
-         * @static 
-         */ 
-        public static function getListsSubscribers($parameters = [])
-        {
-                        /** @var \Atymic\Twitter\Twitter $instance */
-                        return $instance->getListsSubscribers($parameters);
-        }
-                    /**
-         * Subscribes the authenticated user to the specified list.
-         * 
-         * Parameters :
-         * - list_id
-         * - slug
-         * - owner_screen_name
-         * - owner_id
-         *
-         * @param mixed $parameters
-         * @static 
-         */ 
-        public static function postListSubscriber($parameters = [])
-        {
-                        /** @var \Atymic\Twitter\Twitter $instance */
-                        return $instance->postListSubscriber($parameters);
-        }
-                    /**
-         * Returns the subscribers of the specified list. Private list subscribers will only be shown if the authenticated user owns the specified list.
-         * 
-         * Parameters :
-         * - list_id
-         * - slug
-         * - owner_screen_name
-         * - owner_id
-         * - user_id
-         * - screen_name
-         * - include_entities (0|1)
-         * - skip_status (0|1)
-         *
-         * @param mixed $parameters
-         * @static 
-         */ 
-        public static function getListSubscriber($parameters = [])
-        {
-                        /** @var \Atymic\Twitter\Twitter $instance */
-                        return $instance->getListSubscriber($parameters);
-        }
-                    /**
-         * Unsubscribes the authenticated user from the specified list.
-         * 
-         * Parameters :
-         * - list_id
-         * - slug
-         * - owner_screen_name
-         * - owner_id
-         *
-         * @param mixed $parameters
-         * @static 
-         */ 
-        public static function destroyListSubscriber($parameters = [])
-        {
-                        /** @var \Atymic\Twitter\Twitter $instance */
-                        return $instance->destroyListSubscriber($parameters);
-        }
-                    /**
-         * Adds multiple members to a list, by specifying a comma-separated list of member ids or screen names. The authenticated user must own the list to be able to add members to it. Note that lists can’t have more than 5,000 members, and you are limited to adding up to 100 members to a list at a time with this method.
-         * 
-         * Parameters :
-         * - list_id
-         * - slug
-         * - user_id
-         * - screen_name
-         * - owner_screen_name
-         * - owner_id
-         *
-         * @param mixed $parameters
-         * @static 
-         */ 
-        public static function postListCreateAll($parameters = [])
-        {
-                        /** @var \Atymic\Twitter\Twitter $instance */
-                        return $instance->postListCreateAll($parameters);
-        }
-                    /**
-         * Check if the specified user is a member of the specified list.
-         * 
-         * Parameters :
-         * - list_id
-         * - slug
-         * - user_id
-         * - screen_name
-         * - owner_screen_name
-         * - owner_id
-         * - include_entities (0|1)
-         * - skip_status (0|1)
-         *
-         * @param mixed $parameters
-         * @static 
-         */ 
-        public static function getListMember($parameters = [])
-        {
-                        /** @var \Atymic\Twitter\Twitter $instance */
-                        return $instance->getListMember($parameters);
-        }
-                    /**
-         * Returns the members of the specified list. Private list members will only be shown if the authenticated user owns the specified list.
-         * 
-         * Parameters :
-         * - list_id
-         * - slug
-         * - owner_screen_name
-         * - owner_id
-         * - cursor
-         * - include_entities (0|1)
-         * - skip_status (0|1)
-         *
-         * @param mixed $parameters
-         * @static 
-         */ 
-        public static function getListMembers($parameters = [])
-        {
-                        /** @var \Atymic\Twitter\Twitter $instance */
-                        return $instance->getListMembers($parameters);
-        }
-                    /**
-         * Add a member to a list. The authenticated user must own the list to be able to add members to it. Note that lists cannot have more than 5,000 members.
-         * 
-         * Parameters :
-         * - list_id
-         * - slug
-         * - owner_screen_name
-         * - owner_id
-         * - user_id
-         * - screen_name
-         *
-         * @param mixed $parameters
-         * @static 
-         */ 
-        public static function postListMember($parameters = [])
-        {
-                        /** @var \Atymic\Twitter\Twitter $instance */
-                        return $instance->postListMember($parameters);
-        }
-                    /**
-         * Deletes the specified list. The authenticated user must own the list to be able to destroy it.
-         * 
-         * Parameters :
-         * - list_id
-         * - slug
-         * - owner_screen_name
-         * - owner_id
-         *
-         * @param mixed $parameters
-         * @static 
-         */ 
-        public static function destroyList($parameters = [])
-        {
-                        /** @var \Atymic\Twitter\Twitter $instance */
-                        return $instance->destroyList($parameters);
-        }
-                    /**
-         * Updates the specified list. The authenticated user must own the list to be able to update it.
-         * 
-         * Parameters :
-         * - list_id
-         * - slug
-         * - owner_screen_name
-         * - owner_id
-         * - name (1-25)
-         * - mode (public|private)
-         * - description
-         *
-         * @param mixed $parameters
-         * @static 
-         */ 
-        public static function postListUpdate($parameters = [])
-        {
-                        /** @var \Atymic\Twitter\Twitter $instance */
-                        return $instance->postListUpdate($parameters);
-        }
-                    /**
-         * Creates a new list for the authenticated user. Note that you can’t create more than 20 lists per account.
-         * 
-         * Parameters :
-         * - name (1-25)
-         * - mode (public|private)
-         * - description
-         *
-         * @param mixed $parameters
-         * @static 
-         */ 
-        public static function postList($parameters = [])
-        {
-                        /** @var \Atymic\Twitter\Twitter $instance */
-                        return $instance->postList($parameters);
-        }
-                    /**
-         * Returns the specified list. Private lists will only be shown if the authenticated user owns the specified list.
-         * 
-         * Parameters :
-         * - list_id
-         * - slug
-         * - owner_screen_name
-         * - owner_id
-         *
-         * @param mixed $parameters
-         * @static 
-         */ 
-        public static function getList($parameters = [])
-        {
-                        /** @var \Atymic\Twitter\Twitter $instance */
-                        return $instance->getList($parameters);
-        }
-                    /**
-         * Obtain a collection of the lists the specified user is subscribed to, 20 lists per page by default. Does not include the user’s own lists.
-         * 
-         * Parameters :
-         * - user_id
-         * - screen_name
-         * - count (1-1000)
-         * - cursor
-         *
-         * @param mixed $parameters
-         * @static 
-         */ 
-        public static function getListSubscriptions($parameters = [])
-        {
-                        /** @var \Atymic\Twitter\Twitter $instance */
-                        return $instance->getListSubscriptions($parameters);
-        }
-                    /**
-         * Removes multiple members from a list, by specifying a comma-separated list of member ids or screen names. The authenticated user must own the list to be able to remove members from it. Note that lists can’t have more than 500 members, and you are limited to removing up to 100 members to a list at a time with this method.
-         * 
-         * Parameters :
-         * - list_id
-         * - slug
-         * - owner_screen_name
-         * - owner_id
-         * - user_id
-         * - screen_name
-         *
-         * @param mixed $parameters
-         * @static 
-         */ 
-        public static function destroyListMembers($parameters = [])
-        {
-                        /** @var \Atymic\Twitter\Twitter $instance */
-                        return $instance->destroyListMembers($parameters);
-        }
-                    /**
-         * Returns the lists owned by the specified Twitter user. Private lists will only be shown if the authenticated user is also the owner of the lists.
-         * 
-         * Parameters :
-         * - user_id
-         * - screen_name
-         * - count (1-1000)
-         * - cursor
-         *
-         * @param mixed $parameters
-         * @static 
-         */ 
-        public static function getListOwnerships($parameters = [])
-        {
-                        /** @var \Atymic\Twitter\Twitter $instance */
-                        return $instance->getListOwnerships($parameters);
-        }
-                    /**
-         * Upload media (images) to Twitter, to use in a Tweet or Twitter-hosted Card.
-         * 
-         * Parameters :
-         * - media
-         * - media_data
-         *
-         * @param mixed $parameters
-         * @throws BadMethodCallException
-         * @return mixed 
-         * @static 
-         */ 
-        public static function uploadMedia($parameters = [])
-        {
-                        /** @var \Atymic\Twitter\Twitter $instance */
-                        return $instance->uploadMedia($parameters);
-        }
-                    /**
-         * Returns a collection of relevant Tweets matching a specified query.
-         * 
-         * Parameters :
-         * - q
-         * - geocode
-         * - lang
-         * - locale
-         * - result_type (mixed|recent|popular)
-         * - count (1-100)
-         * - until (YYYY-MM-DD)
-         * - since_id
-         * - max_id
-         * - include_entities (0|1)
-         * - callback
-         *
-         * @param mixed $parameters
-         * @static 
-         */ 
-        public static function getSearch($parameters = [])
-        {
-                        /** @var \Atymic\Twitter\Twitter $instance */
-                        return $instance->getSearch($parameters);
-        }
-                    /**
-         * Returns the authenticated user’s saved search queries.
-         *
-         * @static 
-         */ 
-        public static function getSavedSearches()
-        {
-                        /** @var \Atymic\Twitter\Twitter $instance */
-                        return $instance->getSavedSearches();
-        }
-                    /**
-         * Retrieve the information for the saved search represented by the given id. The authenticating user must be the owner of saved search ID being requested.
-         *
-         * @param mixed $id
-         * @static 
-         */ 
-        public static function getSavedSearch($id)
-        {
-                        /** @var \Atymic\Twitter\Twitter $instance */
-                        return $instance->getSavedSearch($id);
-        }
-                    /**
-         * Create a new saved search for the authenticated user. A user may only have 25 saved searches.
-         * 
-         * Parameters :
-         * - query
-         *
-         * @param mixed $parameters
-         * @static 
-         */ 
-        public static function postSavedSearch($parameters = [])
-        {
-                        /** @var \Atymic\Twitter\Twitter $instance */
-                        return $instance->postSavedSearch($parameters);
-        }
-                    /**
-         * Destroys a saved search for the authenticating user. The authenticating user must be the owner of saved search id being destroyed.
-         *
-         * @param mixed $id
-         * @param mixed $parameters
-         * @static 
-         */ 
-        public static function destroySavedSearch($id, $parameters = [])
-        {
-                        /** @var \Atymic\Twitter\Twitter $instance */
-                        return $instance->destroySavedSearch($id, $parameters);
-        }
-                    /**
-         * Returns the 20 most recent mentions (tweets containing a users’s @screen_name) for the authenticating user.
-         * 
-         * Parameters :
-         * - count (1-200)
-         * - include_rts (0|1)
-         * - since_id
-         * - max_id
-         * - trim_user (0|1)
-         * - contributor_details (0|1)
-         * - include_entities (0|1)
-         * - tweet_mode ('extended' returns a collection of Tweets, which are not truncated)
-         *
-         * @param mixed $parameters
-         * @static 
-         */ 
-        public static function getMentionsTimeline($parameters = [])
-        {
-                        /** @var \Atymic\Twitter\Twitter $instance */
-                        return $instance->getMentionsTimeline($parameters);
-        }
-                    /**
-         * Returns a collection of the most recent Tweets (truncated by default) posted by the user indicated by the screen_name or user_id parameters.
-         * 
-         * Parameters :
-         * - user_id
-         * - screen_name
-         * - since_id
-         * - count (1-200)
-         * - include_rts (0|1)
-         * - max_id
-         * - trim_user (0|1)
-         * - exclude_replies (0|1)
-         * - contributor_details (0|1)
-         * - include_entities (0|1)
-         * - tweet_mode ('extended' returns a collection of Tweets, which are not truncated)
-         *
-         * @param mixed $parameters
-         * @static 
-         */ 
-        public static function getUserTimeline($parameters = [])
-        {
-                        /** @var \Atymic\Twitter\Twitter $instance */
-                        return $instance->getUserTimeline($parameters);
-        }
-                    /**
-         * Returns a collection of the most recent Tweets (truncated by default) and retweets posted by the authenticating user and the users they follow. The home timeline is central to how most users interact with the Twitter service.
-         * 
-         * Parameters :
-         * - count (1-200)
-         * - since_id
-         * - max_id
-         * - trim_user (0|1)
-         * - exclude_replies (0|1)
-         * - contributor_details (0|1)
-         * - include_entities (0|1)
-         * - tweet_mode ('extended' returns a collection of Tweets, which are not truncated)
-         *
-         * @param mixed $parameters
-         * @static 
-         */ 
-        public static function getHomeTimeline($parameters = [])
-        {
-                        /** @var \Atymic\Twitter\Twitter $instance */
-                        return $instance->getHomeTimeline($parameters);
-        }
-                    /**
-         * Returns the most recent tweets authored by the authenticating user that have been retweeted by others.
-         * 
-         * Parameters :
-         * - count (1-200)
-         * - since_id
-         * - max_id
-         * - trim_user (0|1)
-         * - include_entities (0|1)
-         * - include_user_entities (0|1)
-         * - tweet_mode ('extended' returns a collection of Tweets, which are not truncated)
-         *
-         * @param mixed $parameters
-         * @static 
-         */ 
-        public static function getRtsTimeline($parameters = [])
-        {
-                        /** @var \Atymic\Twitter\Twitter $instance */
-                        return $instance->getRtsTimeline($parameters);
-        }
-                    /**
-         * Returns a collection of the 100 most recent retweets of the tweet specified by the id parameter.
-         * 
-         * Parameters :
-         * - count (1-200)
-         * - trim_user (0|1)
-         *
-         * @param mixed $id
-         * @param mixed $parameters
-         * @static 
-         */ 
-        public static function getRts($id, $parameters = [])
-        {
-                        /** @var \Atymic\Twitter\Twitter $instance */
-                        return $instance->getRts($id, $parameters);
-        }
-                    /**
-         * Returns a single Tweet, specified by the id parameter. The Tweet’s author will also be embedded within the tweet.
-         * 
-         * Parameters :
-         * - count (1-200)
-         * - trim_user (0|1)
-         * - include_my_retweet (0|1)
-         * - include_entities (0|1)
-         * - tweet_mode ('extended' returns a collection of Tweets, which are not truncated)
-         *
-         * @param mixed $id
-         * @param mixed $parameters
-         * @static 
-         */ 
-        public static function getTweet($id, $parameters = [])
-        {
-                        /** @var \Atymic\Twitter\Twitter $instance */
-                        return $instance->getTweet($id, $parameters);
-        }
-                    /**
-         * Destroys the status specified by the required ID parameter. The authenticating user must be the author of the specified status. Returns the destroyed status if successful.
-         * 
-         * Parameters :
-         * - trim_user (0|1)
-         *
-         * @param mixed $id
-         * @param mixed $parameters
-         * @static 
-         */ 
-        public static function destroyTweet($id, $parameters = [])
-        {
-                        /** @var \Atymic\Twitter\Twitter $instance */
-                        return $instance->destroyTweet($id, $parameters);
-        }
-                    /**
-         * Updates the authenticating user’s current status, also known as tweeting.
-         * 
-         * Parameters :
-         * - status
-         * - in_reply_to_status_id
-         * - lat
-         * - long
-         * - place_id
-         * - display_coordinates (0|1)
-         * - trim_user (0|1)
-         * - media_ids
-         *
-         * @param mixed $parameters
-         * @static 
-         */ 
-        public static function postTweet($parameters = [])
-        {
-                        /** @var \Atymic\Twitter\Twitter $instance */
-                        return $instance->postTweet($parameters);
-        }
-                    /**
-         * Retweets a tweet. Returns the original tweet with retweet details embedded.
-         * 
-         * Parameters :
-         * - trim_user (0|1)
-         *
-         * @param mixed $id
-         * @param mixed $parameters
-         * @static 
-         */ 
-        public static function postRt($id, $parameters = [])
-        {
-                        /** @var \Atymic\Twitter\Twitter $instance */
-                        return $instance->postRt($id, $parameters);
-        }
-                    /**
-         * Updates the authenticating user’s current status and attaches media for upload. In other words, it creates a Tweet with a picture attached.
-         * 
-         * DEPRECATED.
-         * 
-         * Parameters :
-         * - status
-         * - media[]
-         * - possibly_sensitive
-         * - in_reply_to_status_id
-         * - lat
-         * - long
-         * - place_id
-         * - display_coordinates (0|1)
-         *
-         * @param mixed $parameters
-         * @static 
-         */ 
-        public static function postTweetMedia($parameters = [])
-        {
-                        /** @var \Atymic\Twitter\Twitter $instance */
-                        return $instance->postTweetMedia($parameters);
-        }
-                    /**
-         * Returns a single Tweet, specified by a Tweet web URL, in an oEmbed-compatible format. The returned HTML snippet will be automatically recognized as an Embedded Tweet when Twitter’s widget JavaScript is included on the page.
-         * 
-         * Parameters :
-         * - url
-         * - maxwidth (250-550)
-         * - hide_thread (0|1)
-         * - omit_script (0|1)
-         * - align (left|right|center|none)
-         * - related (twitterapi|twittermedia|twitter)
-         * - lang
-         * - theme (dark|light)
-         * - link_color (hex value)
-         * - widget_type (video)
-         *
-         * @param mixed $parameters
-         * @static 
-         */ 
-        public static function getOembed($parameters = [])
-        {
-                        /** @var \Atymic\Twitter\Twitter $instance */
-                        return $instance->getOembed($parameters);
-        }
-                    /**
-         * Returns a collection of up to 100 user IDs belonging to users who have retweeted the tweet specified by the id parameter.
-         * 
-         * Parameters :
-         * - id
-         * - cursor
-         * - stringify_ids (0|1)
-         *
-         * @param mixed $parameters
-         * @static 
-         */ 
-        public static function getRters($parameters = [])
-        {
-                        /** @var \Atymic\Twitter\Twitter $instance */
-                        return $instance->getRters($parameters);
-        }
-                    /**
-         * Returns fully-hydrated tweet objects for up to 100 tweets per request, as specified by comma-separated values passed to the id parameter.
-         * 
-         * Parameters :
-         * - id
-         * - include_entities (0|1)
-         * - trim_user (0|1)
-         * - map (0|1)
-         * - tweet_mode ('extended' returns a collection of Tweets, which are not truncated)
-         *
-         * @param mixed $parameters
-         * @static 
-         */ 
-        public static function getStatusesLookup($parameters = [])
-        {
-                        /** @var \Atymic\Twitter\Twitter $instance */
-                        return $instance->getStatusesLookup($parameters);
-        }
-                    /**
-         * Returns the top 10 trending topics for a specific WOEID, if trending information is available for it.
-         * 
-         * Parameters :
-         * - id
-         * - exclude
-         *
-         * @param mixed $parameters
-         * @static 
-         */ 
-        public static function getTrendsPlace($parameters = [])
-        {
-                        /** @var \Atymic\Twitter\Twitter $instance */
-                        return $instance->getTrendsPlace($parameters);
-        }
-                    /**
-         * Returns the locations that Twitter has trending topic information for.
-         *
-         * @param mixed $parameters
-         * @static 
-         */ 
-        public static function getTrendsAvailable($parameters = [])
-        {
-                        /** @var \Atymic\Twitter\Twitter $instance */
-                        return $instance->getTrendsAvailable($parameters);
-        }
-                    /**
-         * Returns the locations that Twitter has trending topic information for, closest to a specified location.
-         * 
-         * Parameters :
-         * - lat
-         * - long
-         *
-         * @param mixed $parameters
-         * @static 
-         */ 
-        public static function getTrendsClosest($parameters = [])
-        {
-                        /** @var \Atymic\Twitter\Twitter $instance */
-                        return $instance->getTrendsClosest($parameters);
-        }
-                    /**
-         * Returns fully-hydrated user objects for up to 100 users per request, as specified by comma-separated values passed to the user_id and/or screen_name parameters.
-         * 
-         * Parameters :
-         * - user_id
-         * - screen_name
-         * - include_entities (0|1)
-         *
-         * @param mixed $parameters
-         * @static 
-         */ 
-        public static function getUsersLookup($parameters = [])
-        {
-                        /** @var \Atymic\Twitter\Twitter $instance */
-                        return $instance->getUsersLookup($parameters);
-        }
-                    /**
-         * Returns a variety of information about the user specified by the required user_id or screen_name parameter. The author’s most recent Tweet will be returned inline when possible.
-         * 
-         * Parameters :
-         * - user_id
-         * - screen_name
-         * - include_entities (0|1)
-         *
-         * @param mixed $parameters
-         * @static 
-         */ 
-        public static function getUsers($parameters = [])
-        {
-                        /** @var \Atymic\Twitter\Twitter $instance */
-                        return $instance->getUsers($parameters);
-        }
-                    /**
-         * Provides a simple, relevance-based search interface to public user accounts on Twitter. Try querying by topical interest, full name, company name, location, or other criteria. Exact match searches are not supported.
-         * 
-         * Parameters :
-         * - q
-         * - page
-         * - count
-         * - include_entities (0|1)
-         *
-         * @param mixed $parameters
-         * @static 
-         */ 
-        public static function getUsersSearch($parameters = [])
-        {
-                        /** @var \Atymic\Twitter\Twitter $instance */
-                        return $instance->getUsersSearch($parameters);
-        }
-                    /**
-         * Returns a map of the available size variations of the specified user’s profile banner. If the user has not uploaded a profile banner, a HTTP 404 will be served instead. This method can be used instead of string manipulation on the profile_banner_url returned in user objects as described in Profile Images and Banners.
-         * 
-         * Parameters :
-         * - user_id
-         * - screen_name
-         *
-         * @param mixed $parameters
-         * @static 
-         */ 
-        public static function getUserBanner($parameters = [])
-        {
-                        /** @var \Atymic\Twitter\Twitter $instance */
-                        return $instance->getUserBanner($parameters);
-        }
-                    /**
-         * Mutes the user specified in the ID parameter for the authenticating user.
-         * 
-         * Parameters :
-         * - screen_name
-         * - user_id
-         *
-         * @param mixed $parameters
-         * @static 
-         */ 
-        public static function muteUser($parameters = [])
-        {
-                        /** @var \Atymic\Twitter\Twitter $instance */
-                        return $instance->muteUser($parameters);
-        }
-                    /**
-         * Un-mutes the user specified in the ID parameter for the authenticating user.
-         * 
-         * Parameters :
-         * - screen_name
-         * - user_id
-         *
-         * @param mixed $parameters
-         * @static 
-         */ 
-        public static function unmuteUser($parameters = [])
-        {
-                        /** @var \Atymic\Twitter\Twitter $instance */
-                        return $instance->unmuteUser($parameters);
-        }
-                    /**
-         * Returns an array of numeric user ids the authenticating user has muted.
-         * 
-         * Parameters :
-         * - cursor
-         *
-         * @param mixed $parameters
-         * @static 
-         */ 
-        public static function mutedUserIds($parameters = [])
-        {
-                        /** @var \Atymic\Twitter\Twitter $instance */
-                        return $instance->mutedUserIds($parameters);
-        }
-                    /**
-         * Returns an array of user objects the authenticating user has muted.
-         * 
-         * Parameters :
-         * - cursor
-         * - include_entities
-         * - skip_status
-         *
-         * @param mixed $parameters
-         * @static 
-         */ 
-        public static function mutedUsers($parameters = [])
-        {
-                        /** @var \Atymic\Twitter\Twitter $instance */
-                        return $instance->mutedUsers($parameters);
-        }
-                    /**
-         * Access the users in a given category of the Twitter suggested user list.
-         * 
-         * Parameters :
-         * - lang
-         *
-         * @param mixed $slug
-         * @param mixed $parameters
-         * @static 
-         */ 
-        public static function getSuggesteds($slug, $parameters = [])
-        {
-                        /** @var \Atymic\Twitter\Twitter $instance */
-                        return $instance->getSuggesteds($slug, $parameters);
-        }
-                    /**
-         * Access to Twitter’s suggested user list. This returns the list of suggested user categories. The category can be used in GET users / suggestions / :slug to get the users in that category.
-         * 
-         * Parameters :
-         * - lang
-         *
-         * @param mixed $parameters
-         * @static 
-         */ 
-        public static function getSuggestions($parameters = [])
-        {
-                        /** @var \Atymic\Twitter\Twitter $instance */
-                        return $instance->getSuggestions($parameters);
-        }
-                    /**
-         * Access the users in a given category of the Twitter suggested user list and return their most recent status if they are not a protected user.
-         *
-         * @param mixed $slug
-         * @param mixed $parameters
-         * @static 
-         */ 
-        public static function getSuggestedsMembers($slug, $parameters = [])
-        {
-                        /** @var \Atymic\Twitter\Twitter $instance */
-                        return $instance->getSuggestedsMembers($slug, $parameters);
-        }
-                    /**
-         * Get a sign-in request token from Twitter.
-         *
-         * @throws AuthException
-         * @static 
-         */ 
-        public static function getRequestToken($callbackUrl)
-        {
-                        /** @var \Atymic\Twitter\Twitter $instance */
-                        return $instance->getRequestToken($callbackUrl);
-        }
-                    /**
-         * 
-         *
-         * @static 
-         */ 
-        public static function getAuthenticateUrl($oauthToken)
-        {
-                        /** @var \Atymic\Twitter\Twitter $instance */
-                        return $instance->getAuthenticateUrl($oauthToken);
-        }
-                    /**
-         * Get an access token for a logged in user.
-         *
-         * @throws AuthException
-         * @static 
-         */ 
-        public static function getAccessToken($oauthVerifier)
-        {
-                        /** @var \Atymic\Twitter\Twitter $instance */
-                        return $instance->getAccessToken($oauthVerifier);
+                        /** @var \Atymic\Twitter\Service\Accessor $instance */
+                        return $instance->getStreamRules(...$parameters);
         }
          
     }
@@ -17949,6 +16346,34 @@ namespace  {
             {
                                 /** @var \Illuminate\Database\Eloquent\Builder $instance */
                                 return $instance->eachById($callback, $count, $column, $alias);
+            }
+             
+                /**
+             * Query lazily, by chunks of the given size.
+             *
+             * @param int $chunkSize
+             * @return \Illuminate\Support\LazyCollection 
+             * @static 
+             */ 
+            public static function lazy($chunkSize = 1000)
+            {
+                                /** @var \Illuminate\Database\Eloquent\Builder $instance */
+                                return $instance->lazy($chunkSize);
+            }
+             
+                /**
+             * Query lazily, by chunking the results of a query by comparing IDs.
+             *
+             * @param int $count
+             * @param string|null $column
+             * @param string|null $alias
+             * @return \Illuminate\Support\LazyCollection 
+             * @static 
+             */ 
+            public static function lazyById($chunkSize = 1000, $column = null, $alias = null)
+            {
+                                /** @var \Illuminate\Database\Eloquent\Builder $instance */
+                                return $instance->lazyById($chunkSize, $column, $alias);
             }
              
                 /**
@@ -19960,7 +18385,7 @@ namespace  {
             class URL extends \Illuminate\Support\Facades\URL {}
             class Validator extends \Illuminate\Support\Facades\Validator {}
             class View extends \Illuminate\Support\Facades\View {}
-            class Twitter extends \Atymic\Twitter\Facades\Twitter {}
+            class Twitter extends \Atymic\Twitter\Facade\Twitter {}
             class Flare extends \Facade\Ignition\Facades\Flare {}
      
 }
