@@ -22,4 +22,18 @@ trait SearchTweets
 
         dd($results);
     }
+
+    public function searchAll(string $query): void
+    {
+        $params = [
+            'place.fields' => 'country,name',
+            'tweet.fields' => 'author_id,geo',
+            'expansions' => 'author_id,in_reply_to_user_id',
+            TwitterContract::KEY_RESPONSE_FORMAT => TwitterContract::RESPONSE_FORMAT_ARRAY,
+        ];
+
+        $results = Twitter::searchAll($query, ...$params);
+
+        dd($results);
+    }
 }

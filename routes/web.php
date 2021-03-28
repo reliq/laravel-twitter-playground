@@ -51,9 +51,25 @@ Route::prefix('tweets')
             Route::get('/', [TwitterController::class, 'getTweets']);
             Route::get('get/{tweetId}', [TwitterController::class, 'getTweet']);
             Route::get('search/recent/{query}', [TwitterController::class, 'searchRecent']);
+            Route::get('search/all/{query}', [TwitterController::class, 'searchAll']);
             Route::get('user/tweets/{userId}', [TwitterController::class, 'userTweets']);
             Route::get('user/mentions/{userId}', [TwitterController::class, 'userMentions']);
-            Route::get('get-stream-rules', [TwitterController::class, 'getStreamRules']);
+
+            Route::get('stream', [TwitterController::class, 'getStream']);
+            Route::get('stream/rules', [TwitterController::class, 'getStreamRules']);
+            Route::get('stream/rules/post', [TwitterController::class, 'postStreamRules']);
+            Route::get('stream/sampled', [TwitterController::class, 'getSampledStream']);
+
+            Route::get('user/{userId}', [TwitterController::class, 'getUser']);
+            Route::get('users', [TwitterController::class, 'getUsers']);
+            Route::get('user/username/{username}', [TwitterController::class, 'getUserByUsername']);
+            Route::get('users/usernames', [TwitterController::class, 'getUsersByUsernames']);
+
+            Route::get('following/{userId}', [TwitterController::class, 'getFollowing']);
+            Route::get('followers/{userId}', [TwitterController::class, 'getFollowers']);
+            Route::get('follow/{sourceUserId}/{targetUserId}', [TwitterController::class, 'follow']);
+            Route::get('unfollow/{sourceUserId}/{targetUserId}', [TwitterController::class, 'unfollow']);
+
             Route::get('hide/{tweetId}', [TwitterController::class, 'hideTweet']);
         }
     );

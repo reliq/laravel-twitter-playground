@@ -68,13 +68,14 @@
             "dist": {
                 "type": "path",
                 "url": "../twitter",
-                "reference": "cec305b896d680c2fb0b6099035dc1fe6f8aa078"
+                "reference": "508f6800905e7fe9d70754240695648ddde7f824"
             },
             "require": {
                 "ext-json": "*",
                 "guzzlehttp/guzzle": "^6.4|^7.0",
                 "guzzlehttp/oauth-subscriber": "^0.4",
                 "illuminate/support": "5.5 - 8",
+                "kamermans/guzzle-oauth2-subscriber": "^1.0",
                 "nesbot/carbon": "^2.26",
                 "php": "^7.4 || ^8.0",
                 "php-di/php-di": "^6.2",
@@ -1027,6 +1028,51 @@
                 "source": "https://github.com/guzzle/psr7/tree/1.8.1"
             },
             "time": "2021-03-21T16:25:00+00:00"
+        },
+        {
+            "name": "kamermans/guzzle-oauth2-subscriber",
+            "version": "v1.0.8",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/kamermans/guzzle-oauth2-subscriber.git",
+                "reference": "18fb67c97f38c6b463f1ccdcad95b641666e42c1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/kamermans/guzzle-oauth2-subscriber/zipball/18fb67c97f38c6b463f1ccdcad95b641666e42c1",
+                "reference": "18fb67c97f38c6b463f1ccdcad95b641666e42c1",
+                "shasum": ""
+            },
+            "require": {
+                "guzzlehttp/guzzle": "~4.0|~5.0|~6.0|~7.0",
+                "php": ">=5.4.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "kamermans\\OAuth2\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Steve Kamerman",
+                    "email": "stevekamerman@gmail.com"
+                }
+            ],
+            "description": "OAuth 2.0 client for Guzzle 4, 5 and 6+",
+            "keywords": [
+                "Guzzle",
+                "oauth"
+            ],
+            "support": {
+                "issues": "https://github.com/kamermans/guzzle-oauth2-subscriber/issues",
+                "source": "https://github.com/kamermans/guzzle-oauth2-subscriber/tree/v1.0.8"
+            },
+            "time": "2020-12-10T00:38:57+00:00"
         },
         {
             "name": "laravel/framework",
