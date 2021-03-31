@@ -35,7 +35,10 @@ trait UserLookup
 
     public function getUserByUsername(string $username): void
     {
-        $result = Twitter::getUserByUsername($username);
+        $params = [
+            TwitterContract::KEY_RESPONSE_FORMAT => TwitterContract::RESPONSE_FORMAT_OBJECT,
+        ];
+        $result = Twitter::getUserByUsername($username, ...$params);
 
         dd($result);
     }

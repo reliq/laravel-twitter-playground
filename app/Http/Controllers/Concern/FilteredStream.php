@@ -9,17 +9,6 @@ use Twitter;
 
 trait FilteredStream
 {
-    public function getStream(): void
-    {
-        $params = [
-            TwitterContract::KEY_RESPONSE_FORMAT => TwitterContract::RESPONSE_FORMAT_ARRAY,
-        ];
-
-        $result = Twitter::getStream(...$params);
-
-        dd($result);
-    }
-
     public function getStreamRules(): void
     {
         $result = Twitter::getStreamRules();
