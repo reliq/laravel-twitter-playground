@@ -45,7 +45,7 @@ Route::prefix('v1/tweets')
 
 Route::prefix('tweets')
     ->middleware('auth')
-    ->name('tweet-lookup')
+    ->name('tweets')
     ->group(
         function () {
             Route::get('/', [TwitterController::class, 'getTweets']);

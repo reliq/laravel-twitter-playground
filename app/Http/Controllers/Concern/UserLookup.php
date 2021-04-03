@@ -16,7 +16,7 @@ trait UserLookup
             TwitterContract::KEY_RESPONSE_FORMAT => TwitterContract::RESPONSE_FORMAT_ARRAY,
         ];
 
-        $tweet = Twitter::getUser($userId, ...$params);
+        $tweet = Twitter::getUser($userId, $params);
 
         dd($tweet);
     }
@@ -28,7 +28,7 @@ trait UserLookup
             'tweet.fields' => 'author_id,geo',
         ];
 
-        $result = Twitter::getUsers($userIds, ...$params);
+        $result = Twitter::getUsers($userIds, $params);
 
         dd($result);
     }
@@ -38,7 +38,7 @@ trait UserLookup
         $params = [
             TwitterContract::KEY_RESPONSE_FORMAT => TwitterContract::RESPONSE_FORMAT_OBJECT,
         ];
-        $result = Twitter::getUserByUsername($username, ...$params);
+        $result = Twitter::getUserByUsername($username, $params);
 
         dd($result);
     }
@@ -51,7 +51,7 @@ trait UserLookup
             TwitterContract::KEY_RESPONSE_FORMAT => TwitterContract::RESPONSE_FORMAT_OBJECT,
         ];
 
-        $result = Twitter::getUsersByUsernames($usernames, ...$params);
+        $result = Twitter::getUsersByUsernames($usernames, $params);
 
         dd($result);
     }

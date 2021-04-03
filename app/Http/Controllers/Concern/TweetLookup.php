@@ -18,7 +18,7 @@ trait TweetLookup
             TwitterContract::KEY_RESPONSE_FORMAT => TwitterContract::RESPONSE_FORMAT_ARRAY,
         ];
 
-        $tweet = Twitter::getTweet($tweetId, ...$params);
+        $tweet = Twitter::getTweet($tweetId, $params);
 
         dd($tweet);
     }
@@ -32,7 +32,7 @@ trait TweetLookup
             'expansions' => 'author_id,in_reply_to_user_id',
         ];
 
-        $tweets = Twitter::getTweets($tweetIds, ...$params);
+        $tweets = Twitter::getTweets($tweetIds, $params);
 
         dd($tweets);
     }
