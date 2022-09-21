@@ -1,17 +1,18 @@
-<?php /** @noinspection ForgottenDebugOutputInspection */
+<?php
+/** @noinspection ForgottenDebugOutputInspection */
 
 declare(strict_types=1);
 
 namespace App\Http\Controllers\ApiV1;
 
 use App\Http\Requests\TweetRequest;
+use Atymic\Twitter\Facade\Twitter;
 use Exception;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Response;
 use Illuminate\Http\UploadedFile;
 use LogicException;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
-use Twitter;
 
 class TwitterController
 {
@@ -132,10 +133,44 @@ class TwitterController
         return $mediaId;
     }
 
-    public function getTweet()
+    public function getTweet(): never
     {
         $tweets = Twitter::getUserTimeline(['screen_name' => 'IAmReliq', 'count' => 5]);
 
         dd($tweets);
+    }
+
+    public function adHoc(): never
+    {
+        $accessToken = '942865358-ie7SHMmOHIKKc65sbr6qgVidTSmpY8x1XclxOqCY';
+        $accessTokenSecret = 'ZdnDSVCXSWxOPgfW7qZhJMo277YmDi0zSKpgQbtpuFz0h';
+        $callbackUrl = 'http://iamreliq.test/twitter-callback'; // must be approved in twitter
+
+        $init = app(\Atymic\Twitter\Twitter::class);
+        $second = Twitter::usingCredentials($accessToken, $accessTokenSecret);
+
+        $token = Twitter::getRequestToken($callbackUrl);
+        $hashed = Twitter::crcHash($token['oauth_token_secret']);
+
+
+
+        dd($init, $hashed);
+    }
+
+    public function linkifyTest()
+    {
+        $tweets = Twitter::getUserTimeline(
+            [
+                'screen_name' => 'IAmReliq',
+                'count' => 3,
+            ]
+        );
+        $linkified = [];
+
+        foreach ($tweets as $tweet) {
+            $linkified[] = Twitter::linkify($tweet);
+        }
+
+        dd($tweets, $linkified);
     }
 }

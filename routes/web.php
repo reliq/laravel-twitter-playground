@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ApiV1\OldTwitterController;
 use App\Http\Controllers\ApiV1\TwitterController as ApiV1TwitterController;
 use App\Http\Controllers\TwitterController;
 use Illuminate\Support\Facades\Route;
@@ -39,9 +40,10 @@ Route::prefix('v1/tweets')
             Route::get('/', [ApiV1TwitterController::class, 'tweet']);
             Route::post('/', [ApiV1TwitterController::class, 'postTweet']);
             Route::get('get', [ApiV1TwitterController::class, 'getTweet']);
+            Route::get('adhoc', [ApiV1TwitterController::class, 'adHoc']);
+            Route::get('linkify-test', [ApiV1TwitterController::class, 'linkifyTest']);
         }
     );
-
 
 Route::prefix('tweets')
     ->middleware('auth')
@@ -49,6 +51,7 @@ Route::prefix('tweets')
     ->group(
         function () {
             Route::get('/', [TwitterController::class, 'getTweets']);
+            Route::get('adhoc', [TwitterController::class, 'adHoc']);
             Route::get('get/{tweetId}', [TwitterController::class, 'getTweet']);
             Route::get('search/recent/{query}', [TwitterController::class, 'searchRecent']);
             Route::get('search/all/{query}', [TwitterController::class, 'searchAll']);
